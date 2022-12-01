@@ -1,4 +1,4 @@
-import { Button } from 'components/Button/Button';
+// import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
 import MovieCard from 'components/MovieCard/MovieCard';
 import { NotFound } from 'components/NotFound/NotFound';
@@ -15,7 +15,7 @@ const Movies = () => {
   // const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
   const page = searchParams.get('page') ?? 1;
   const galleryRef = useRef();
