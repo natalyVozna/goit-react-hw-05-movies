@@ -10,6 +10,9 @@ export const HeaderStyled = styled.header`
 `;
 
 export const NavBox = styled.nav`
+  margin: 0 auto;
+  max-width: 1340px;
+  width: 100%;
   display: flex;
   gap: ${p => p.theme.space[5]}px;
   font-size: 24px;

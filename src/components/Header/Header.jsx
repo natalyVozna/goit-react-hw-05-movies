@@ -1,6 +1,4 @@
-import { Container, HeaderStyled, NavItem, NavBox } from './Header.styled';
-// import { Box } from 'components/Box/Box';
-// import PropTypes from 'prop-types';
+import { HeaderStyled, NavItem, NavBox } from './Header.styled';
 
 const navItems = [
   { href: '/', text: 'Home' },

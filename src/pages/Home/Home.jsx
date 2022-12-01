@@ -1,38 +1,43 @@
 import { useEffect, useState } from 'react';
 import { getTrendingMovies } from 'services/api';
 import { Container, Title, Gallery } from './Home.styled';
-import HomeCard from 'components/HomeCard/HomeCard';
-import { useFetch } from 'components/hooks/useFetch';
+import MovieCard from 'components/MovieCard/MovieCard';
+import { useFetch } from 'hooks/useFetch';
+import { NotFound } from 'components/NotFound/NotFound';
+import { Loader } from 'components/Loader/Loader';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [fetchData, isLoading, isError] = useFetch(params => {
-    getTrendingMovies().then(resMovies => setMovies(resMovies.results));
+  const [fetchData, isLoading, isError] = useFetch(() => {
+    getTrendingMovies().then(resMovies => {
+      setMovies(resMovies.results);
+      setLoading(false);
+    });
   });
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  if (isLoading) {
-    return <div>Loading</div>;
+  if (isLoading || loading) {
+    return <Loader />;
   }
   if (isError) {
     return <div>Error</div>;
   }
 
   if (movies?.length === 0) {
-    return <div>No match</div>;
+    return <NotFound text="Nothing found" />;
   }
-  console.log(movies);
 
   return (
     <Container>
       <Title>Trending today</Title>
       <Gallery>
         {movies?.map(({ title, id, poster_path }) => (
-          <HomeCard key={id} title={title} id={id} url={poster_path} />
+          <MovieCard key={id} title={title} id={id} url={poster_path} />
         ))}
       </Gallery>
     </Container>

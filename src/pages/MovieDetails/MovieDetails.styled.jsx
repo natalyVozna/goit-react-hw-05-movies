@@ -1,5 +1,14 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+export const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  max-width: 1340px;
+  width: 100%;
+  margin: 0 auto;
+`;
 
 export const SectionInfo = styled.section`
   position: relative;
@@ -17,7 +26,7 @@ export const SectionInfo = styled.section`
   min-height: 400px;
   color: ${p => p.theme.colors.white};
 `;
-export const GoBack = styled.button`
+export const GoBack = styled(NavLink)`
   color: ${p => p.theme.colors.white};
   background-color: transparent;
   border: none;
@@ -25,6 +34,7 @@ export const GoBack = styled.button`
   top: 10px;
   left: 40px;
   font-size: 18px;
+  text-decoration: none;
 
   &:hover {
     cursor: pointer;
@@ -75,14 +85,23 @@ export const AdditionalSection = styled.section`
   padding: 20px 40px;
 `;
 
-export const NavItem = styled(Link)`
+export const LinkBox = styled.ul`
   display: flex;
+  flex-direction: column;
+`;
+
+export const NavItem = styled(NavLink)`
+  display: inline-flex;
   align-items: center;
   padding: ${p => p.theme.space[2]}px;
   border-radius: ${p => p.theme.space[2]}px;
   font-size: 20px;
   line-height: 1;
   text-decoration: none;
+
+  &.active {
+    color: ${p => p.theme.colors.red};
+  }
 
   :hover:not(.active),
   :focus-visible:not(.active) {
