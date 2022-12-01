@@ -1,7 +1,7 @@
 import { CastCard } from 'components/CastCard/CastCard';
 import { NotFound } from 'components/NotFound/NotFound';
 import { useFetch } from 'hooks/useFetch';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getActors } from 'services/api';
 import { Gallery } from './Cast.styled';
@@ -10,11 +10,14 @@ const Cast = () => {
   const { movieId } = useParams();
   const [actors, setActors] = useState([]);
 
-  const [fetchData, isLoading, isError] = useFetch(params => {
+  const getData = useCallback(params => {
     getActors(params).then(res => {
       setActors(res.cast);
     });
-  });
+  }, []);
+
+  const [fetchData, isLoading, isError] = useFetch(getData);
+
   useEffect(() => {
     fetchData(movieId);
   }, [fetchData, movieId]);

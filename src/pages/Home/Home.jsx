@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getTrendingMovies } from 'services/api';
 import { Container, Title, Gallery } from './Home.styled';
 import MovieCard from 'components/MovieCard/MovieCard';
@@ -10,12 +10,14 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [fetchData, isLoading, isError] = useFetch(() => {
+  const getData = useCallback(() => {
     getTrendingMovies().then(resMovies => {
       setMovies(resMovies.results);
       setLoading(false);
     });
-  });
+  }, []);
+
+  const [fetchData, isLoading, isError] = useFetch(getData);
 
   useEffect(() => {
     fetchData();

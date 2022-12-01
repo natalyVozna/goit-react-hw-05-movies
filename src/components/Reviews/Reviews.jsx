@@ -1,7 +1,7 @@
 import { Loader } from 'components/Loader/Loader';
 import { NotFound } from 'components/NotFound/NotFound';
 import { useFetch } from 'hooks/useFetch';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReviews } from 'services/api';
 import { Container, Item, Author, Text } from './Reviews.styled';
@@ -11,12 +11,15 @@ const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [fetchData, isLoading, isError] = useFetch(params => {
+  const getData = useCallback(params => {
     getReviews(params).then(res => {
       setReviews(res.results);
       setLoading(false);
     });
-  });
+  }, []);
+
+  const [fetchData, isLoading, isError] = useFetch(getData);
+
   useEffect(() => {
     setLoading(true);
     fetchData(movieId);

@@ -13,7 +13,7 @@ import {
   AdditionalSection,
   LinkBox,
 } from './MovieDetails.styled';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { getFullInfoAboutMovie } from 'services/api';
 import { useFetch } from 'hooks/useFetch';
 import { Loader } from 'components/Loader/Loader';
@@ -29,7 +29,7 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [fetchData, isLoading, isError] = useFetch(params => {
+  const getData = useCallback(params => {
     getFullInfoAboutMovie(params).then(
       ({
         title,
@@ -54,7 +54,9 @@ const MovieDetails = () => {
         setLoading(false);
       }
     );
-  });
+  }, []);
+
+  const [fetchData, isLoading, isError] = useFetch(getData);
 
   useEffect(() => {
     fetchData(movieId);

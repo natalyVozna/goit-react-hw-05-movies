@@ -3,6 +3,7 @@ import MovieCard from 'components/MovieCard/MovieCard';
 import { NotFound } from 'components/NotFound/NotFound';
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import { useFetch } from 'hooks/useFetch';
+import { useCallback } from 'react';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getMovieByQuery } from 'services/api';
@@ -12,10 +13,10 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
 
-  const [fetchData, isLoading, isError] = useFetch(query => {
+  const getMovies = useCallback(query => {
     getMovieByQuery(query)
       .then(resMovies => {
         if (resMovies.results.length === 0) {
@@ -26,7 +27,9 @@ const Movies = () => {
       })
       .catch(error => setError(error.message))
       .finally(setLoading(false));
-  });
+  }, []);
+
+  const [fetchData, isLoading, isError] = useFetch(getMovies);
 
   useEffect(() => {
     if (query !== '') {
