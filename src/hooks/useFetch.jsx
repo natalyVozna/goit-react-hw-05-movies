@@ -13,7 +13,7 @@ export const useFetch = callback => {
     } finally {
       setIsLoading(false);
     }
-  });
+  }, []);
 
   return [fetchData, isLoading, isError];
 };
