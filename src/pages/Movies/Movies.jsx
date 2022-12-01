@@ -45,18 +45,18 @@ const Movies = () => {
     return <NotFound text="An error occturred, please try again" />;
   }
 
-  if (movies?.length === 0 && error) {
-    return <NotFound text="Nothing found" />;
-  }
-
   return (
     <Container>
       <Searchbar />
-      <Gallery>
-        {movies?.map(({ title, id, poster_path }) => (
-          <MovieCard key={id} title={title} id={id} url={poster_path} />
-        ))}
-      </Gallery>
+      {movies?.length === 0 && error ? (
+        <NotFound text="Nothing found" />
+      ) : (
+        <Gallery>
+          {movies?.map(({ title, id, poster_path }) => (
+            <MovieCard key={id} title={title} id={id} url={poster_path} />
+          ))}
+        </Gallery>
+      )}
     </Container>
   );
 };
