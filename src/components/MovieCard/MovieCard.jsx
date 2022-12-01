@@ -1,11 +1,14 @@
 import { Container, NavItem, Cover, Title } from './MovieCard.styled';
 import PropTypes from 'prop-types';
 import defaultImg from '../../images/defaultImg.jpeg';
+import { useLocation } from 'react-router-dom';
 
 const MovieCard = ({ title, id, url }) => {
+  const location = useLocation();
   return (
     <Container>
-      <NavItem to={`/movies/${id}`}>
+      {/* <NavItem to={`/movies/${id}`} state={state.from}> */}
+      <NavItem to={`/movies/${id}`} state={{ from: location }}>
         <Cover
           src={
             url !== null

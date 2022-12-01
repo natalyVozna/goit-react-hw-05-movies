@@ -19,7 +19,7 @@ export const Searchbar = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setSearchParams(search !== '' ? { query: search } : {});
+    setSearchParams(search !== '' ? { query: search, page: 1 } : {});
   };
 
   return (

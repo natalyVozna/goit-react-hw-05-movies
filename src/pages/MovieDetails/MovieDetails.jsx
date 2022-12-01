@@ -1,4 +1,4 @@
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   NavItem,
   SectionInfo,
@@ -28,6 +28,7 @@ const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   const getData = useCallback(params => {
     getFullInfoAboutMovie(params).then(
@@ -80,7 +81,9 @@ const MovieDetails = () => {
         <SectionInfo
           url={`https://image.tmdb.org/t/p/original/${movie.backdropUrl}`}
         >
-          <GoBack to={'/'}>&#8592; Go back</GoBack>
+          <GoBack to={location?.state ? location.state.from : '/'}>
+            &#8592; Go back
+          </GoBack>
           <Cover>
             <Img
               src={`https://image.tmdb.org/t/p/original/${movie.url}`}
@@ -104,7 +107,7 @@ const MovieDetails = () => {
 
           <LinkBox>
             {navItems.map(({ href, text }) => (
-              <NavItem to={href} key={href}>
+              <NavItem to={href} key={href} state={location.state}>
                 &#10139; &nbsp;<span>{text}</span>
               </NavItem>
             ))}
